@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sna-construction
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd frontend && npm install && npm run build
+      cd ../backend && npm install && npm run build && npx prisma generate && npx prisma migrate deploy
+    startCommand: cd backend && NODE_ENV=production node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:/tmp/sna.db
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: PORT
+        value: 4000
