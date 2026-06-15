@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold-400: #F0B429;
+  --gold-500: #C8960C;
+  --navy-950: #060f20;
+  --navy-900: #0B1E3D;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-white text-gray-900 font-sans antialiased; }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+    @apply font-bold leading-tight;
+  }
+}
+
+@layer components {
+  /* ── Layout ── */
+  .container-max { @apply max-w-7xl mx-auto; }
+
+  /* ── Eyebrow labels ── */
+  .eyebrow {
+    color: #0056B3;
+    @apply inline-flex items-center gap-2.5 font-semibold text-[11px] uppercase tracking-[0.18em];
+  }
+  .eyebrow-gold {
+    color: #C8960C;
+    @apply inline-flex items-center gap-2.5 font-semibold text-[11px] uppercase tracking-[0.18em];
+  }
+  .eyebrow-white {
+    @apply inline-flex items-center gap-2.5 text-white font-semibold text-[11px] uppercase tracking-[0.18em] opacity-60;
+  }
+
+  /* ── Section headings ── */
+  .section-heading {
+    font-family: 'Poppins', sans-serif;
+    color: #0B1E3D;
+    @apply text-[2rem] md:text-[2.75rem] lg:text-[3.25rem] font-black leading-[1.1] mt-3;
+  }
+  .section-heading-white {
+    font-family: 'Poppins', sans-serif;
+    @apply text-[2rem] md:text-[2.75rem] lg:text-[3.25rem] font-black text-white leading-[1.1] mt-3;
+  }
+  .section-lead { @apply text-lg text-gray-500 mt-4 leading-relaxed; }
+  .section-lead-white { @apply text-lg text-white mt-4 leading-relaxed opacity-60; }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    background-color: #0056B3;
+    color: white;
+    @apply font-semibold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-primary:hover { background-color: #003a8c; }
+
+  .btn-navy {
+    background-color: #0B1E3D;
+    color: white;
+    @apply font-semibold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-navy:hover { background-color: #122d6e; }
+
+  .btn-gold {
+    background-color: #C8960C;
+    color: white;
+    @apply font-bold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-gold:hover { background-color: #a67a08; }
+
+  .btn-outline-white {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    @apply font-semibold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-outline-white:hover { background-color: rgba(255, 255, 255, 0.1); border-color: white; }
+
+  .btn-outline {
+    border: 1px solid #0056B3;
+    color: #0056B3;
+    @apply font-semibold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-outline:hover { background-color: #0056B3; color: white; }
+
+  .btn-outline-navy {
+    border: 1px solid #0B1E3D;
+    color: #0B1E3D;
+    @apply font-semibold px-8 py-4 rounded-none transition-all duration-200 inline-flex items-center gap-3 tracking-wide text-sm;
+  }
+  .btn-outline-navy:hover { background-color: #0B1E3D; color: white; }
+
+  /* ── Admin dark theme ── */
+  .card {
+    background-color: #1e293b;
+    @apply border border-white/5 rounded-2xl overflow-hidden;
+  }
+  .input-field {
+    background-color: #1e293b;
+    @apply w-full border border-white/10 rounded-xl text-white placeholder-slate-500
+           focus:outline-none focus:ring-1 px-4 py-3.5 transition-all;
+  }
+  .label { @apply block text-sm font-medium text-slate-300 mb-2; }
+
+  /* ── Public inputs ── */
+  .pub-input {
+    @apply w-full bg-white border border-gray-200 text-gray-900 placeholder-gray-400
+           focus:outline-none focus:ring-2 px-5 py-4 transition-all rounded-none text-sm;
+  }
+  .pub-label {
+    @apply block text-[11px] font-semibold text-gray-500 mb-2 uppercase tracking-[0.12em];
+  }
+}
+
+/* ─── Eyebrow decorative bars ─── */
+.eyebrow::before,
+.eyebrow-gold::before,
+.eyebrow-white::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  flex-shrink: 0;
+}
+.eyebrow::before       { background-color: #0056B3; }
+.eyebrow-gold::before  { background-color: #C8960C; }
+.eyebrow-white::before { background-color: var(--gold-400); }
+
+/* ─── Scroll reveal ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+.delay-100 { transition-delay: 0.1s; }
+.delay-150 { transition-delay: 0.15s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+
+/* ─── Infinite ticker ─── */
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 50s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #0B1E3D; border-radius: 99px; }
