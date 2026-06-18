@@ -20,7 +20,7 @@ async function main() {
     { key: 'about_short', value: 'SNA Construction Limited is a leading construction and engineering company based in Lagos, Nigeria, delivering world-class building solutions across West Africa.' },
     { key: 'about_full', value: 'With over 15 years of experience in the construction industry, SNA Construction Limited has established itself as a trusted name in building excellence. From residential homes to large-scale commercial complexes, we bring your vision to life with precision, quality, and integrity. Our team of certified engineers, architects, and construction professionals is committed to delivering projects on time, within budget, and to the highest standards.' },
     { key: 'phone', value: '09060203705' },
-    { key: 'email', value: 'info@snaconstruction.com' },
+    { key: 'email', value: 'sna.constructions@outlook.com' },
     { key: 'address', value: 'Wuraola House, 90 Allen Ave, Allen, Ikeja 101233, Lagos, Nigeria' },
     { key: 'whatsapp', value: '2349060203705' },
     { key: 'years_experience', value: '15' },

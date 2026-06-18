@@ -80,7 +80,7 @@ export function Contact() {
             </div>
             <div>
               <p className="text-[10px] text-white/30 uppercase tracking-[0.15em] font-semibold">Email Us</p>
-              <p className="text-white font-bold mt-1">{settings?.email || 'info@snaconstruction.com'}</p>
+              <p className="text-white font-bold mt-1">{settings?.email || 'sna.constructions@outlook.com'}</p>
               <p className="text-white/30 text-xs mt-0.5">Response within 24 hours</p>
             </div>
           </a>

@@ -178,7 +178,7 @@ export function Footer() {
                 <a href={`mailto:${s?.email}`}
                   className="flex items-center gap-3 text-sm text-white/40 hover:text-white transition-colors">
                   <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#F0B429' }} />
-                  {s?.email || 'info@snaconstruction.com'}
+                  {s?.email || 'sna.constructions@outlook.com'}
                 </a>
               </li>
               {s?.whatsapp && (

@@ -685,7 +685,7 @@ export function Home() {
           <div className="absolute bottom-6 left-6 right-6 bg-navy-950/80 backdrop-blur-sm px-6 py-5">
             <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Head Office</p>
             <p className="text-white font-semibold text-sm">{settings?.address || 'Wuraola House, 90 Allen Ave, Ikeja, Lagos, Nigeria'}</p>
-            <p className="text-white/50 text-xs mt-2">{settings?.phone || '09060203705'} · {settings?.email || 'info@snaconstruction.com'}</p>
+            <p className="text-white/50 text-xs mt-2">{settings?.phone || '09060203705'} · {settings?.email || 'sna.constructions@outlook.com'}</p>
           </div>
         </div>
       </section>
