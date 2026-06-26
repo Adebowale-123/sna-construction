@@ -1,6 +1,22 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { MapPin, Phone, Mail, MessageCircle, Send, CheckCircle, Clock, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Send, CheckCircle, Clock, ArrowRight, Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react';
+
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.56V6.75a4.85 4.85 0 0 1-1.06-.06z"/>
+  </svg>
+);
+
+const SOCIALS = [
+  { label: 'Facebook',   icon: <Facebook className="w-5 h-5" />,  href: '#', bg: 'hover:bg-blue-600',    desc: 'Connect on Facebook'  },
+  { label: 'Instagram',  icon: <Instagram className="w-5 h-5" />, href: '#', bg: 'hover:bg-pink-600',    desc: 'Follow on Instagram'  },
+  { label: 'LinkedIn',   icon: <Linkedin className="w-5 h-5" />,  href: '#', bg: 'hover:bg-blue-700',    desc: 'Connect on LinkedIn'  },
+  { label: 'X / Twitter',icon: <Twitter className="w-5 h-5" />,   href: '#', bg: 'hover:bg-gray-900',    desc: 'Follow on X'          },
+  { label: 'YouTube',    icon: <Youtube className="w-5 h-5" />,   href: '#', bg: 'hover:bg-red-600',     desc: 'Subscribe on YouTube' },
+  { label: 'TikTok',     icon: <TikTokIcon />,                     href: '#', bg: 'hover:bg-gray-900',    desc: 'Follow on TikTok'     },
+  { label: 'WhatsApp',   icon: <MessageCircle className="w-5 h-5" />, href: '#', bg: 'hover:bg-emerald-600', desc: 'Chat on WhatsApp' },
+];
 import api from '../services/api';
 import { SiteSettings } from '../types';
 import { Link } from 'react-router-dom';
@@ -143,6 +159,24 @@ export function Contact() {
                     <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                     {item}
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="reveal bg-white border border-gray-100 p-5">
+              <p className="text-sm font-bold text-navy-900 mb-4">Follow Us on Social Media</p>
+              <div className="grid grid-cols-4 gap-2">
+                {SOCIALS.map(({ label, icon, href, bg, desc }) => (
+                  <a key={label} href={href}
+                    target={href !== '#' ? '_blank' : undefined}
+                    rel="noopener noreferrer"
+                    title={desc}
+                    className={`flex flex-col items-center gap-1.5 py-3 bg-gray-50 hover:text-white transition-all group ${bg}`}
+                  >
+                    <span className="text-gray-500 group-hover:text-white transition-colors">{icon}</span>
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-gray-400 group-hover:text-white transition-colors leading-none">{label}</span>
+                  </a>
                 ))}
               </div>
             </div>

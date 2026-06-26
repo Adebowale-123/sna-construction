@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Twitter, ArrowRight, Youtube, MessageCircle } from 'lucide-react';
+
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.83 1.56V6.75a4.85 4.85 0 0 1-1.06-.06z"/>
+  </svg>
+);
 import { useQuery } from '@tanstack/react-query';
 import api from '../../services/api';
 import { SiteSettings } from '../../types';
@@ -98,22 +104,28 @@ export function Footer() {
               ))}
             </div>
             {/* Social */}
-            <div className="flex gap-2 mt-7">
-              {[
-                { href: s?.facebook,  icon: <Facebook className="w-4 h-4" />,  label: 'Facebook' },
-                { href: s?.instagram, icon: <Instagram className="w-4 h-4" />, label: 'Instagram' },
-                { href: s?.linkedin,  icon: <Linkedin className="w-4 h-4" />,  label: 'LinkedIn' },
-                { href: s?.twitter,   icon: <Twitter className="w-4 h-4" />,   label: 'Twitter' },
-              ].filter(l => l.href).map(({ href, icon, label }) => (
-                <a key={label} href={href!} target="_blank" rel="noopener noreferrer" aria-label={label}
-                  className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:border-gold-400 hover:text-gold-400 transition-all">
-                  {icon}
-                </a>
-              ))}
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
-                className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:border-gold-400 hover:text-gold-400 transition-all">
-                <Youtube className="w-4 h-4" />
-              </a>
+            <div className="mt-7">
+              <p className="text-[10px] text-white/25 uppercase tracking-[0.18em] font-semibold mb-3">Follow Us</p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { href: s?.facebook  || '#', icon: <Facebook className="w-4 h-4" />,   label: 'Facebook',  color: 'hover:bg-blue-600' },
+                  { href: s?.instagram || '#', icon: <Instagram className="w-4 h-4" />,  label: 'Instagram', color: 'hover:bg-pink-600' },
+                  { href: s?.linkedin  || '#', icon: <Linkedin className="w-4 h-4" />,   label: 'LinkedIn',  color: 'hover:bg-blue-700' },
+                  { href: s?.twitter   || '#', icon: <Twitter className="w-4 h-4" />,    label: 'X / Twitter', color: 'hover:bg-black' },
+                  { href: s?.youtube   || '#', icon: <Youtube className="w-4 h-4" />,    label: 'YouTube',   color: 'hover:bg-red-600' },
+                  { href: s?.tiktok    || '#', icon: <TikTokIcon />,                      label: 'TikTok',    color: 'hover:bg-black' },
+                  { href: s?.whatsapp ? `https://wa.me/${s.whatsapp}` : '#', icon: <MessageCircle className="w-4 h-4" />, label: 'WhatsApp', color: 'hover:bg-emerald-600' },
+                ].map(({ href, icon, label, color }) => (
+                  <a key={label} href={href}
+                    target={href !== '#' ? '_blank' : undefined}
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    title={label}
+                    className={`w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:border-transparent hover:text-white transition-all ${color}`}>
+                    {icon}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
