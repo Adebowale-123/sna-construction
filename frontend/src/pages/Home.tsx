@@ -10,6 +10,15 @@ import { Project, Service, Testimonial, SiteSettings } from '../types';
 
 const SHOWCASE: Project[] = [
   {
+    id: 'sc-magodo',
+    title: 'Luxury 4-Bedroom Duplex — Magodo',
+    description: 'Just-completed luxury 4-bedroom duplex in Magodo, Lagos featuring marble floors, black granite kitchen, glass-and-gold staircase with LED lighting, tray ceilings, and landscaped compound.',
+    category: 'residential', location: 'Magodo, Lagos', year: 2026, value: '₦180M',
+    images: '["/images/magodo-project/exterior-2.jpeg","/images/magodo-project/kitchen-1.jpeg","/images/magodo-project/kitchen-2.jpeg","/images/magodo-project/living-room.jpeg","/images/magodo-project/staircase.jpeg","/images/magodo-project/bedroom.jpeg","/images/magodo-project/hallway.jpeg","/images/magodo-project/living-area-2.jpeg"]',
+    thumbnail: '/images/magodo-project/exterior-2.jpeg',
+    featured: true, status: 'completed', createdAt: '2026-06-01',
+  },
+  {
     id: 'sc1', title: 'Marina Bay Commercial Tower',
     description: 'A 15-floor commercial tower on Victoria Island featuring premium office spaces, ground-floor retail, and rooftop facilities.',
     category: 'commercial', location: 'Victoria Island, Lagos', year: 2023, value: '₦2.8B',
@@ -54,7 +63,7 @@ const SHOWCASE: Project[] = [
 ];
 
 const IMG = {
-  hero:    'https://images.unsplash.com/photo-1741023705492-48561fc75bab?auto=format&fit=crop&w=1920&q=90',
+  hero:    '/images/magodo-project/exterior-2.jpeg',
   about:   'https://images.unsplash.com/photo-1602497485099-e41a116a272c?auto=format&fit=crop&w=900&q=80',
   process: 'https://images.unsplash.com/photo-1700469919563-ef267d459da5?auto=format&fit=crop&w=1920&q=80',
   cta:     'https://images.unsplash.com/photo-1771457362601-4818d59107d2?auto=format&fit=crop&w=900&q=80',

@@ -1,15 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, MapPin, Calendar, CheckCircle, Clock, Phone } from 'lucide-react';
+import { ArrowRight, MapPin, Calendar, CheckCircle, Clock, Phone, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import api from '../services/api';
 import { Project } from '../types';
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1771457362601-4818d59107d2?auto=format&fit=crop&w=1920&q=85';
+const HERO_IMG = '/images/magodo-project/exterior-2.jpeg';
+
+const MAGODO_GALLERY = [
+  { src: '/images/magodo-project/exterior-2.jpeg',   label: 'Exterior' },
+  { src: '/images/magodo-project/living-room.jpeg',  label: 'Living Room' },
+  { src: '/images/magodo-project/kitchen-1.jpeg',    label: 'Kitchen' },
+  { src: '/images/magodo-project/kitchen-2.jpeg',    label: 'Kitchen' },
+  { src: '/images/magodo-project/staircase.jpeg',    label: 'Staircase' },
+  { src: '/images/magodo-project/bedroom.jpeg',      label: 'Master Bedroom' },
+  { src: '/images/magodo-project/hallway.jpeg',      label: 'Hallway' },
+  { src: '/images/magodo-project/living-area-2.jpeg',label: 'Lounge' },
+];
 
 /* ── Showcase projects (shown when admin hasn't added real projects yet) ── */
 const SHOWCASE: Project[] = [
   /* ─ COMPLETED ─ */
+  {
+    id: 'sc-magodo',
+    title: 'Luxury 4-Bedroom Duplex — Magodo',
+    description: 'Just-completed luxury 4-bedroom duplex in Magodo, Lagos. Finished to the highest specification: full polished marble flooring throughout, modern kitchen with black granite countertops and wood-accent cabinets, dramatic staircase with glass balustrade and gold rails with LED strip lighting, tray ceilings with recessed LED strips in every room, built-in wardrobes, wide marble entrance hallway with solid wood door, and a landscaped compound with ample parking.',
+    category: 'residential', location: 'Magodo, Lagos', year: 2026, value: '₦180M', client: 'Private Client',
+    images: '["/images/magodo-project/exterior-2.jpeg","/images/magodo-project/kitchen-1.jpeg","/images/magodo-project/kitchen-2.jpeg","/images/magodo-project/living-room.jpeg","/images/magodo-project/staircase.jpeg","/images/magodo-project/bedroom.jpeg","/images/magodo-project/hallway.jpeg","/images/magodo-project/living-area-2.jpeg"]',
+    thumbnail: '/images/magodo-project/exterior-2.jpeg',
+    featured: true, status: 'completed', createdAt: '2026-06-01',
+  },
   {
     id: 'sc1', title: 'Marina Bay Commercial Tower',
     description: 'A 15-floor commercial tower on Victoria Island featuring premium office spaces, ground-floor retail, and a rooftop terrace. Delivered 6 weeks ahead of schedule.',
@@ -139,6 +159,12 @@ export function Projects() {
     return catMatch && statusMatch;
   });
 
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const openLightbox = (i: number) => setLightboxIdx(i);
+  const closeLightbox = () => setLightboxIdx(null);
+  const prevLight = () => setLightboxIdx(i => i === null ? null : (i - 1 + MAGODO_GALLERY.length) % MAGODO_GALLERY.length);
+  const nextLight = () => setLightboxIdx(i => i === null ? null : (i + 1) % MAGODO_GALLERY.length);
+
   const handleStatusChange = (s: string) => {
     setActiveStatus(s);
     setActiveCategory('all');
@@ -180,6 +206,94 @@ export function Projects() {
           )}
         </div>
       </div>
+
+      {/* ── MAGODO FEATURED GALLERY ── */}
+      <section className="py-14 bg-white border-b border-gray-100">
+        <div className="container-max px-4 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-600 mb-2">
+                <CheckCircle className="w-3.5 h-3.5" /> Just Completed · 2026
+              </span>
+              <h2 className="text-2xl md:text-3xl font-black text-navy-900 leading-tight">
+                Luxury 4-Bedroom Duplex — Magodo, Lagos
+              </h2>
+              <p className="text-gray-500 text-sm mt-1.5 max-w-xl">
+                Polished marble floors · Black granite kitchen · Glass & gold staircase · LED tray ceilings · Private compound
+              </p>
+            </div>
+            <div className="flex-shrink-0 text-right">
+              <p className="text-xs text-gray-400 uppercase tracking-widest">Project Value</p>
+              <p className="text-2xl font-black text-gold-600">₦180M</p>
+            </div>
+          </div>
+
+          {/* Photo grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {/* Large first photo */}
+            <button
+              onClick={() => openLightbox(0)}
+              className="col-span-2 row-span-2 relative overflow-hidden group h-72 md:h-auto"
+            >
+              <img src={MAGODO_GALLERY[0].src} alt={MAGODO_GALLERY[0].label}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute inset-0 bg-navy-950/0 group-hover:bg-navy-950/30 transition-colors flex items-center justify-center">
+                <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <span className="absolute bottom-3 left-3 bg-navy-950/70 text-white text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1">
+                {MAGODO_GALLERY[0].label}
+              </span>
+            </button>
+
+            {/* Remaining 6 photos */}
+            {MAGODO_GALLERY.slice(1, 7).map((photo, i) => (
+              <button
+                key={photo.src}
+                onClick={() => openLightbox(i + 1)}
+                className="relative overflow-hidden group h-36"
+              >
+                <img src={photo.src} alt={photo.label}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-navy-950/0 group-hover:bg-navy-950/30 transition-colors flex items-center justify-center">
+                  <ZoomIn className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <span className="absolute bottom-2 left-2 bg-navy-950/70 text-white text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5">
+                  {photo.label}
+                </span>
+                {/* Last tile: show "+1 more" overlay */}
+                {i === 5 && MAGODO_GALLERY.length > 7 && (
+                  <div className="absolute inset-0 bg-navy-950/60 flex items-center justify-center">
+                    <span className="text-white font-black text-xl">+{MAGODO_GALLERY.length - 7}</span>
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── LIGHTBOX ── */}
+      {lightboxIdx !== null && (
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4" onClick={closeLightbox}>
+          <button onClick={closeLightbox}
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+            <X className="w-5 h-5" />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); prevLight(); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); nextLight(); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+            <ChevronRight className="w-6 h-6" />
+          </button>
+          <img src={MAGODO_GALLERY[lightboxIdx].src} alt={MAGODO_GALLERY[lightboxIdx].label}
+            className="max-h-[85vh] max-w-full object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+          <p className="absolute bottom-4 text-gray-400 text-sm">
+            {MAGODO_GALLERY[lightboxIdx].label} · {lightboxIdx + 1} / {MAGODO_GALLERY.length}
+          </p>
+        </div>
+      )}
 
       {/* ── STATUS TABS (navy bar) ── */}
       <div className="bg-navy-900">
