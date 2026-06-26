@@ -68,7 +68,7 @@ export function Footer() {
                   <MessageCircle className="w-4 h-4" /> WhatsApp Us
                 </a>
               ) : (
-                <a href={`tel:${s?.phone || '09060203705'}`}
+                <a href={`tel:${s?.phone || '+2348027672448'}`}
                   className="btn-outline-white text-sm px-7 py-3.5 flex items-center gap-2">
                   <Phone className="w-4 h-4" /> Call Us Now
                 </a>
@@ -171,7 +171,7 @@ export function Footer() {
                 <a href={`tel:${s?.phone}`}
                   className="flex items-center gap-3 text-sm text-white/40 hover:text-white transition-colors">
                   <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#F0B429' }} />
-                  {s?.phone || '09060203705'}
+                  {s?.phone || '+2348027672448'}
                 </a>
               </li>
               <li>

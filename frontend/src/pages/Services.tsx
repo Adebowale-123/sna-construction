@@ -149,7 +149,7 @@ export function Services() {
             <Link to="/contact" className="btn-gold whitespace-nowrap">
               Free Consultation <ArrowRight className="w-4 h-4" />
             </Link>
-            <a href={`tel:${'09060203705'}`} className="btn-outline-white whitespace-nowrap">
+            <a href={`tel:${'+2348027672448'}`} className="btn-outline-white whitespace-nowrap">
               <Phone className="w-4 h-4" /> Call Us Now
             </a>
           </div>

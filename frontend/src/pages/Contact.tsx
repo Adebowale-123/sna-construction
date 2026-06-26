@@ -69,7 +69,7 @@ export function Contact() {
             </div>
             <div>
               <p className="text-[10px] text-white/30 uppercase tracking-[0.15em] font-semibold">Call Us</p>
-              <p className="text-white font-bold mt-1">{settings?.phone || '09060203705'}</p>
+              <p className="text-white font-bold mt-1">{settings?.phone || '+2348027672448'}</p>
               <p className="text-white/30 text-xs mt-0.5">Available 24/7 for emergencies</p>
             </div>
           </a>

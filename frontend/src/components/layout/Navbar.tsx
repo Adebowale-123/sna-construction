@@ -57,11 +57,11 @@ export function Navbar() {
           <div className="flex items-center gap-6">
             <a href={`tel:${settings?.phone}`}
               className="flex items-center gap-2 text-[11px] text-white/50 hover:text-white transition-colors">
-              <Phone className="w-3 h-3" /> {settings?.phone || '09060203705'}
+              <Phone className="w-3 h-3" /> {settings?.phone || '+2348027672448'}
             </a>
             <a href={`mailto:${settings?.email}`}
               className="flex items-center gap-2 text-[11px] text-white/50 hover:text-white transition-colors">
-              <Mail className="w-3 h-3" /> {settings?.email || 'info@snaconstruction.com'}
+              <Mail className="w-3 h-3" /> {settings?.email || 'sna.constructions@outlook.com'}
             </a>
           </div>
         </div>
@@ -97,10 +97,10 @@ export function Navbar() {
 
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <a href={`tel:${settings?.phone || '09060203705'}`}
+            <a href={`tel:${settings?.phone || '+2348027672448'}`}
               className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-navy-900 transition-colors">
               <Phone className="w-4 h-4 text-brand-500" />
-              <span className="hidden xl:inline">{settings?.phone || '09060203705'}</span>
+              <span className="hidden xl:inline">{settings?.phone || '+2348027672448'}</span>
             </a>
             <Link to="/contact" className="btn-navy text-sm py-3 px-6">
               Get a Quote <ArrowRight className="w-4 h-4" />
@@ -146,7 +146,7 @@ export function Navbar() {
               <a href={`tel:${settings?.phone}`}
                 className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500">
                 <Phone className="w-4 h-4 text-brand-500" />
-                {settings?.phone || '09060203705'}
+                {settings?.phone || '+2348027672448'}
               </a>
               <Link to="/contact" className="btn-navy w-full justify-center text-sm">
                 Get a Free Quote <ArrowRight className="w-4 h-4" />
