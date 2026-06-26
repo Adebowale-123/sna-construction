@@ -10,7 +10,7 @@ const TikTokIcon = () => (
 
 const SOCIALS = [
   { label: 'Facebook',   icon: <Facebook className="w-5 h-5" />,  href: '#', bg: 'hover:bg-blue-600',    desc: 'Connect on Facebook'  },
-  { label: 'Instagram',  icon: <Instagram className="w-5 h-5" />, href: '#', bg: 'hover:bg-pink-600',    desc: 'Follow on Instagram'  },
+  { label: 'Instagram',  icon: <Instagram className="w-5 h-5" />, href: 'https://www.instagram.com/sna0924?igsh=MWp6djlwcThpNDNsaw%3D%3D&utm_source=qr', bg: 'hover:bg-pink-600', desc: 'Follow on Instagram' },
   { label: 'LinkedIn',   icon: <Linkedin className="w-5 h-5" />,  href: '#', bg: 'hover:bg-blue-700',    desc: 'Connect on LinkedIn'  },
   { label: 'X / Twitter',icon: <Twitter className="w-5 h-5" />,   href: '#', bg: 'hover:bg-gray-900',    desc: 'Follow on X'          },
   { label: 'YouTube',    icon: <Youtube className="w-5 h-5" />,   href: '#', bg: 'hover:bg-red-600',     desc: 'Subscribe on YouTube' },
