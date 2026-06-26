@@ -295,6 +295,41 @@ export function Projects() {
         </div>
       )}
 
+      {/* ── MAGODO PROJECT VIDEOS ── */}
+      <section className="py-14 bg-navy-950">
+        <div className="container-max px-4 md:px-8">
+          <div className="mb-8">
+            <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.2em]">Project Videos</span>
+            <h2 className="text-2xl md:text-3xl font-black text-white mt-2">See the Build in Motion</h2>
+            <p className="text-white/40 text-sm mt-1">Walk-through footage of the completed Magodo luxury duplex</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { src: '/images/magodo-project/vid1.MOV', poster: '/images/magodo-project/exterior-2.jpeg',  label: 'Exterior & Compound Tour' },
+              { src: '/images/magodo-project/vid2.MOV', poster: '/images/magodo-project/living-room.jpeg', label: 'Interior Walk-through' },
+            ].map((v) => (
+              <div key={v.src} className="bg-navy-900 overflow-hidden group">
+                <video
+                  controls
+                  preload="metadata"
+                  poster={v.poster}
+                  className="w-full aspect-video object-cover"
+                  playsInline
+                >
+                  <source src={v.src} type="video/mp4" />
+                  <source src={v.src} type="video/quicktime" />
+                </video>
+                <div className="px-4 py-3 flex items-center gap-2 border-t border-white/5">
+                  <span className="w-2 h-2 bg-gold-400 rounded-full flex-shrink-0" />
+                  <p className="text-white text-sm font-semibold">{v.label}</p>
+                  <span className="ml-auto text-white/25 text-xs">Magodo, Lagos · 2026</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── STATUS TABS (navy bar) ── */}
       <div className="bg-navy-900">
         <div className="container-max px-4 md:px-8 flex items-center overflow-x-auto scrollbar-none">

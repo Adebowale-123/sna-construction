@@ -329,6 +329,46 @@ export function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════
+          01C MAGODO PROJECT VIDEOS
+      ══════════════════════════════════════════════ */}
+      <section className="bg-navy-950 py-12">
+        <div className="container-max px-4 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <p className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Project Videos</p>
+              <h2 className="text-xl md:text-2xl font-black text-white">See the Build in Motion</h2>
+            </div>
+            <Link to="/projects?status=completed" className="btn-outline-white text-sm flex-shrink-0">
+              View Full Gallery <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { src: '/images/magodo-project/vid1.MOV', poster: '/images/magodo-project/exterior-2.jpeg',  label: 'Exterior & Compound Tour' },
+              { src: '/images/magodo-project/vid2.MOV', poster: '/images/magodo-project/living-room.jpeg', label: 'Interior Walk-through' },
+            ].map((v) => (
+              <div key={v.src} className="bg-navy-900 overflow-hidden">
+                <video
+                  controls
+                  preload="metadata"
+                  poster={v.poster}
+                  className="w-full aspect-video object-cover"
+                  playsInline
+                >
+                  <source src={v.src} type="video/mp4" />
+                  <source src={v.src} type="video/quicktime" />
+                </video>
+                <div className="px-4 py-3 flex items-center gap-2 border-t border-white/5">
+                  <span className="w-2 h-2 bg-gold-400 rounded-full flex-shrink-0" />
+                  <p className="text-white text-sm font-semibold">{v.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
           02 CLIENTS TICKER
       ══════════════════════════════════════════════ */}
       <section className="py-10 bg-white border-b border-gray-100">
