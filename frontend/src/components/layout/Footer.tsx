@@ -111,7 +111,7 @@ export function Footer() {
                   { href: s?.facebook  || 'https://www.facebook.com/share/1XpafCAENk/?mibextid=wwXIfr', icon: <Facebook className="w-4 h-4" />,   label: 'Facebook',  color: 'hover:bg-blue-600' },
                   { href: s?.instagram || 'https://www.instagram.com/sna0924?igsh=MWp6djlwcThpNDNsaw%3D%3D&utm_source=qr', icon: <Instagram className="w-4 h-4" />,  label: 'Instagram', color: 'hover:bg-pink-600' },
                   { href: s?.linkedin  || '#', icon: <Linkedin className="w-4 h-4" />,   label: 'LinkedIn',  color: 'hover:bg-blue-700' },
-                  { href: s?.twitter   || '#', icon: <Twitter className="w-4 h-4" />,    label: 'X / Twitter', color: 'hover:bg-black' },
+                  { href: s?.twitter   || 'https://x.com/snaconstruction?s=21', icon: <Twitter className="w-4 h-4" />,    label: 'X / Twitter', color: 'hover:bg-black' },
                   { href: s?.youtube   || '#', icon: <Youtube className="w-4 h-4" />,    label: 'YouTube',   color: 'hover:bg-red-600' },
                   { href: s?.tiktok    || '#', icon: <TikTokIcon />,                      label: 'TikTok',    color: 'hover:bg-black' },
                   { href: s?.whatsapp ? `https://wa.me/${s.whatsapp}` : '#', icon: <MessageCircle className="w-4 h-4" />, label: 'WhatsApp', color: 'hover:bg-emerald-600' },
