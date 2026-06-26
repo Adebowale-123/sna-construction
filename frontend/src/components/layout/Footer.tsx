@@ -108,7 +108,7 @@ export function Footer() {
               <p className="text-[10px] text-white/25 uppercase tracking-[0.18em] font-semibold mb-3">Follow Us</p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { href: s?.facebook  || '#', icon: <Facebook className="w-4 h-4" />,   label: 'Facebook',  color: 'hover:bg-blue-600' },
+                  { href: s?.facebook  || 'https://www.facebook.com/share/1XpafCAENk/?mibextid=wwXIfr', icon: <Facebook className="w-4 h-4" />,   label: 'Facebook',  color: 'hover:bg-blue-600' },
                   { href: s?.instagram || 'https://www.instagram.com/sna0924?igsh=MWp6djlwcThpNDNsaw%3D%3D&utm_source=qr', icon: <Instagram className="w-4 h-4" />,  label: 'Instagram', color: 'hover:bg-pink-600' },
                   { href: s?.linkedin  || '#', icon: <Linkedin className="w-4 h-4" />,   label: 'LinkedIn',  color: 'hover:bg-blue-700' },
                   { href: s?.twitter   || '#', icon: <Twitter className="w-4 h-4" />,    label: 'X / Twitter', color: 'hover:bg-black' },
