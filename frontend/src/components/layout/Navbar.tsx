@@ -1,31 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail, ArrowRight, ChevronDown, CheckCircle, Clock, Calendar } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, CheckCircle, Clock } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../services/api';
 import { SiteSettings } from '../../types';
 
-const BASE_LINKS = [
-  { to: '/',        label: 'Home' },
-  { to: '/about',   label: 'About Us' },
-  { to: '/services', label: 'Services' },
-  { to: '/contact', label: 'Contact' },
-];
-
-const PROJECT_ITEMS = [
-  { to: '/projects',                   label: 'All Projects',       icon: <ArrowRight className="w-3.5 h-3.5" />, desc: 'View full portfolio' },
-  { to: '/projects?status=completed',  label: 'Completed Projects',  icon: <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />, desc: 'Delivered & handed over' },
-  { to: '/projects?status=ongoing',    label: 'Ongoing Projects',    icon: <Clock className="w-3.5 h-3.5 text-amber-500" />,   desc: 'Currently in progress' },
-  { to: '/projects?status=upcoming',   label: 'Upcoming Projects',   icon: <Calendar className="w-3.5 h-3.5 text-sky-500" />,   desc: 'Starting soon' },
+const NAV_LINKS = [
+  { to: '/',                          label: 'Home',                end: true,  search: null },
+  { to: '/about',                     label: 'About Us',            end: false, search: null },
+  { to: '/services',                  label: 'Services',            end: false, search: null },
+  { to: '/projects',                  label: 'All Projects',        end: false, search: '' },
+  { to: '/projects?status=completed', label: 'Completed Projects',  end: false, search: 'status=completed', icon: <CheckCircle className="w-3 h-3 text-emerald-500" /> },
+  { to: '/projects?status=ongoing',   label: 'Ongoing Projects',    end: false, search: 'status=ongoing',   icon: <Clock className="w-3 h-3 text-amber-500" /> },
+  { to: '/contact',                   label: 'Contact',             end: false, search: null },
 ];
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
-  const [desktopProjectsOpen, setDesktopProjectsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { data: settings } = useQuery<SiteSettings>({
     queryKey: ['settings'],
@@ -39,13 +32,16 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-    setMobileProjectsOpen(false);
-    setDesktopProjectsOpen(false);
-  }, [location]);
+  useEffect(() => { setMobileOpen(false); }, [location]);
 
-  const isProjectsActive = location.pathname.startsWith('/projects');
+  const isActive = (link: typeof NAV_LINKS[number]) => {
+    if (link.to === '/') return location.pathname === '/';
+    if (link.search !== null) {
+      const currentSearch = location.search.replace('?', '');
+      return location.pathname === '/projects' && currentSearch === link.search;
+    }
+    return location.pathname.startsWith(link.to);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -81,62 +77,22 @@ export function Navbar() {
 
           {/* Desktop links */}
           <div className="hidden lg:flex items-center h-full">
-            {BASE_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === '/'}
-                className={({ isActive }) =>
-                  `relative px-5 py-6 text-sm font-semibold tracking-wide transition-colors duration-200 ${
-                    isActive ? 'text-navy-900' : 'text-gray-500 hover:text-navy-900'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    {isActive && <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold-500" />}
-                  </>
-                )}
-              </NavLink>
-            ))}
-
-            {/* Projects dropdown */}
-            <div
-              ref={dropdownRef}
-              className="relative"
-              onMouseEnter={() => setDesktopProjectsOpen(true)}
-              onMouseLeave={() => setDesktopProjectsOpen(false)}
-            >
-              <NavLink
-                to="/projects"
-                className={`relative flex items-center gap-1.5 px-5 py-6 text-sm font-semibold tracking-wide transition-colors duration-200 ${
-                  isProjectsActive ? 'text-navy-900' : 'text-gray-500 hover:text-navy-900'
-                }`}
-              >
-                Projects
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${desktopProjectsOpen ? 'rotate-180' : ''}`} />
-                {isProjectsActive && <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold-500" />}
-              </NavLink>
-
-              {desktopProjectsOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-2xl py-2 z-50">
-                  {PROJECT_ITEMS.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className="flex items-start gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors group"
-                    >
-                      <span className="mt-0.5 flex-shrink-0">{item.icon}</span>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-800 group-hover:text-navy-900 transition-colors">{item.label}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link);
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`relative flex items-center gap-1.5 px-4 py-6 text-sm font-semibold tracking-wide transition-colors duration-200 whitespace-nowrap ${
+                    active ? 'text-navy-900' : 'text-gray-500 hover:text-navy-900'
+                  }`}
+                >
+                  {link.icon && link.icon}
+                  {link.label}
+                  {active && <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold-500" />}
+                </Link>
+              );
+            })}
           </div>
 
           {/* CTA */}
@@ -165,51 +121,26 @@ export function Navbar() {
         {mobileOpen && (
           <div className="lg:hidden border-t border-gray-100 bg-white">
             <div className="px-4 py-3 space-y-0.5">
-              {BASE_LINKS.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === '/'}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between px-4 py-3.5 text-sm font-semibold border-l-2 transition-colors ${
-                      isActive
+              {NAV_LINKS.map((link) => {
+                const active = isActive(link);
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className={`flex items-center justify-between px-4 py-3.5 text-sm font-semibold border-l-2 transition-colors ${
+                      active
                         ? 'border-gold-500 text-navy-900 bg-gray-50'
                         : 'border-transparent text-gray-500 hover:text-navy-900 hover:bg-gray-50'
-                    }`
-                  }
-                >
-                  {link.label}
-                  <ArrowRight className="w-3.5 h-3.5 opacity-30" />
-                </NavLink>
-              ))}
-
-              {/* Mobile Projects expandable */}
-              <button
-                onClick={() => setMobileProjectsOpen(!mobileProjectsOpen)}
-                className={`w-full flex items-center justify-between px-4 py-3.5 text-sm font-semibold border-l-2 transition-colors ${
-                  isProjectsActive
-                    ? 'border-gold-500 text-navy-900 bg-gray-50'
-                    : 'border-transparent text-gray-500 hover:text-navy-900 hover:bg-gray-50'
-                }`}
-              >
-                Projects
-                <ChevronDown className={`w-4 h-4 opacity-40 transition-transform ${mobileProjectsOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {mobileProjectsOpen && (
-                <div className="ml-4 border-l border-gray-100 pl-3 space-y-0.5 pb-1">
-                  {PROJECT_ITEMS.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className="flex items-center gap-3 px-3 py-2.5 text-sm text-gray-500 hover:text-navy-900 hover:bg-gray-50 transition-colors"
-                    >
-                      <span className="flex-shrink-0">{item.icon}</span>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      {link.icon && link.icon}
+                      {link.label}
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-30" />
+                  </Link>
+                );
+              })}
             </div>
             <div className="px-4 pb-5 pt-2 border-t border-gray-100 space-y-2 mt-2">
               <a href={`tel:${settings?.phone}`}

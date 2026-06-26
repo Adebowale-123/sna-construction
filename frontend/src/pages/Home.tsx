@@ -1,12 +1,56 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowRight, Phone, MessageCircle, CheckCircle, Star,
   Award, Shield, Clock, Users, Building2, Hammer,
-  HardHat, MapPin, ChevronRight, Calendar,
+  HardHat, MapPin, ChevronRight, ChevronLeft, Calendar,
 } from 'lucide-react';
 import api from '../services/api';
 import { Project, Service, Testimonial, SiteSettings } from '../types';
+
+const MAGODO_SLIDES = [
+  {
+    src: '/images/magodo-project/exterior-2.jpeg',
+    label: 'Exterior View',
+    desc: 'A stunning white-finished 4-bedroom semi-detached duplex with modern architectural design, black aluminium window frames, and a spacious gated compound with ample parking.',
+  },
+  {
+    src: '/images/magodo-project/living-room.jpeg',
+    label: 'Living Room',
+    desc: 'The open-plan living area features polished marble flooring, a bespoke ambient LED lighting system, and premium ceiling finishes — creating an elegant atmosphere for entertaining.',
+  },
+  {
+    src: '/images/magodo-project/kitchen-1.jpeg',
+    label: 'Modern Kitchen',
+    desc: 'A fully fitted contemporary kitchen with black granite countertops, white gloss lower cabinets, warm wood upper cabinets, and a marble-effect backsplash — where style meets function.',
+  },
+  {
+    src: '/images/magodo-project/kitchen-2.jpeg',
+    label: 'Kitchen Finish',
+    desc: 'Premium kitchen cabinetry and countertop detailing throughout, combining practicality with high-end aesthetics. All appliance spaces pre-fitted for a seamless, clutter-free finish.',
+  },
+  {
+    src: '/images/magodo-project/staircase.jpeg',
+    label: 'Feature Staircase',
+    desc: 'A dramatic centrepiece staircase with full-height glass balustrade, polished gold handrails, and LED strip lighting illuminating every tread — a true statement of luxury craftsmanship.',
+  },
+  {
+    src: '/images/magodo-project/bedroom.jpeg',
+    label: 'Master Bedroom',
+    desc: 'Spacious master bedroom with a recessed tray ceiling and integrated LED lighting strips, floor-to-ceiling built-in wardrobes, and continuous marble flooring extending across the upper level.',
+  },
+  {
+    src: '/images/magodo-project/hallway.jpeg',
+    label: 'Entrance Hallway',
+    desc: 'A grand, wide entrance hallway finished entirely in polished marble, with a solid wood panelled entrance door — setting the tone for the exceptional standard of finish carried throughout the home.',
+  },
+  {
+    src: '/images/magodo-project/living-area-2.jpeg',
+    label: 'Lounge Area',
+    desc: 'A secondary lounge and entertainment area with LED-lit tray ceilings, feature wall detailing, and marble flooring — a versatile, refined space designed for modern family living.',
+  },
+];
 
 const SHOWCASE: Project[] = [
   {
@@ -101,6 +145,18 @@ const SERVICES_ICONS = [
 ];
 
 export function Home() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const nextSlide = useCallback(() => setActiveSlide(i => (i + 1) % MAGODO_SLIDES.length), []);
+  const prevSlide = () => setActiveSlide(i => (i - 1 + MAGODO_SLIDES.length) % MAGODO_SLIDES.length);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(nextSlide, 4500);
+    return () => clearInterval(t);
+  }, [paused, nextSlide]);
+
   const { data: settings } = useQuery<SiteSettings>({ queryKey: ['settings'], queryFn: () => api.get('/settings').then(r => r.data) });
   const { data: services = [] } = useQuery<Service[]>({ queryKey: ['services'], queryFn: () => api.get('/services').then(r => r.data) });
   const { data: projects = [] } = useQuery<Project[]>({ queryKey: ['projects', 'featured'], queryFn: () => api.get('/projects?featured=true').then(r => r.data) });
@@ -178,6 +234,99 @@ export function Home() {
         </div>
       </section>
 
+
+      {/* ══════════════════════════════════════════════
+          01B FEATURED PROJECT SLIDER — Magodo Duplex
+      ══════════════════════════════════════════════ */}
+      <section
+        className="relative h-[75vh] min-h-[520px] overflow-hidden bg-navy-950"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* Slides */}
+        {MAGODO_SLIDES.map((slide, i) => (
+          <div
+            key={slide.src}
+            className={`absolute inset-0 transition-opacity duration-1000 ${i === activeSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <img
+              src={slide.src}
+              alt={slide.label}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/40 to-navy-950/10" />
+          </div>
+        ))}
+
+        {/* "Just Completed" ribbon */}
+        <div className="absolute top-0 left-0 right-0 flex justify-center pt-6 z-10">
+          <div className="inline-flex items-center gap-2 bg-gold-500 text-navy-950 px-5 py-2 text-[11px] font-black uppercase tracking-[0.2em] shadow-lg">
+            <CheckCircle className="w-3.5 h-3.5" />
+            Just Completed &nbsp;·&nbsp; Magodo, Lagos &nbsp;·&nbsp; 2026
+          </div>
+        </div>
+
+        {/* Prev / Next arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center text-white transition-all"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center text-white transition-all"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Bottom content */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 pb-10 pt-20 bg-gradient-to-t from-navy-950/90 to-transparent">
+          <div className="container-max px-4 md:px-8">
+            <div className="max-w-3xl">
+              {/* Project title */}
+              <p className="text-gold-400 text-xs font-bold uppercase tracking-[0.2em] mb-2">
+                {MAGODO_SLIDES[activeSlide].label}
+              </p>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
+                Luxury 4-Bedroom Duplex<br />
+                <span className="text-gold-400">Magodo, Lagos</span>
+              </h2>
+              <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl mb-6">
+                {MAGODO_SLIDES[activeSlide].desc}
+              </p>
+              <Link
+                to="/projects?status=completed"
+                className="inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold px-6 py-3 text-sm uppercase tracking-wider transition-colors"
+              >
+                View All Photos <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="absolute bottom-6 right-6 z-10 flex items-center gap-2">
+          {MAGODO_SLIDES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveSlide(i)}
+              className={`transition-all duration-300 rounded-full ${
+                i === activeSlide ? 'w-6 h-2.5 bg-gold-500' : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/60'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Progress bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10 z-10">
+          <div
+            key={activeSlide}
+            className="h-full bg-gold-500"
+            style={{ animation: paused ? 'none' : 'slideProgress 4.5s linear forwards' }}
+          />
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════
           02 CLIENTS TICKER
